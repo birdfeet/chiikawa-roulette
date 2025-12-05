@@ -1,8 +1,24 @@
 const canvas = document.querySelector('canvas')
 const secondsCount = document.querySelector(".seconds")
 const rank = document.querySelector(".rank")
+const character = document.querySelector(".character")
+const guy = document.querySelector(".guy")
 const context = canvas.getContext('2d')
-const dimensions = {width: 275, height: 319}
+const dimensions = {width: 1816/4, height: 2000/4}
+
+const chars = {
+    0: "Chiikawa",
+    1: "Hachiware",
+    2: "Usagi",
+    3: "Kurimanju"
+}
+
+const pics = {
+    0: './assets/chiikawa.png',
+    1: './assets/hachi.png',
+    2: './assets/usagi.png',
+    3: './assets/kurimanju.png'
+}
 
 const ranks = {
     10: " Seasoned",
@@ -15,13 +31,19 @@ const ranks = {
 }
 const startTime = Date.now()
 
-
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 context.translate(window.innerWidth/2, window.innerHeight/2)
 
+const choice = getRandomInt(4)
+const currentGuy = chars[choice]
+character.innerText = guy.innerText = currentGuy
+
 const image = new Image()
-image.src = './assets/god.png'
+image.src = pics[choice]
+if (choice == 2){
+    dimensions.height = dimensions.height *1.3
+}
 
 const loopNum = 40
 const offsetDist = 90
@@ -44,7 +66,6 @@ image.onload = () =>{
 window.addEventListener('mousemove', onMouseMove)
 
 function draw(offset, loopCount){
-
     let currentImages_Percent = (loopNum - loopCount) / loopNum
     context.drawImage(
         image,
@@ -87,5 +108,8 @@ function loopDraw(){
 
 function startLooping(){
     requestAnimationFrame(loopDraw)
+}
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
